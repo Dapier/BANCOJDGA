@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8" />
+<title th:text="${titulo}"></title>
+</head>
+<body>
+
+<h3 th:text="${titulo}"></h3>
+
+
+<p th:text="${mensaje}"></p>
+<br>
+<p th:text="${mensajeSuccess}"></p>
+
+<form th:action="@{/buscar-numero-tel}" th:object="${cliente}" method="post">
+	<table>
+		<tr>
+			<td>ID del usuario</td>
+			<td><input type="text" th:field="*{idUser}" required><td>
+		</tr>
+		<tr>
+			<td>Numero de telefono</td>
+			<td><input type="text" th:field="*{numeroTelefonico}" required><td>
+		</tr>
+		
+		<br>
+		<input type="submit" value="Buscar" />
+	</table>
+
+</form>
+
+
+<br>
+<br>
+<table th:if="${listaClientesBusqueda}">
+
+<br>
+	<thead>
+	<tr>
+		<th>ID User</th>
+		<th>Nombre</th>
+		<th>Apellido</th>
+		<th>Numero Telefonico</th>
+		<th>Email</th>
+		<th>Numero de cuenta</th>
+		
+	</tr>
+	</thead>
+	<tbody>
+		
+		
+		<tr th:each="clienteSearch: ${listaClientesBusqueda}"></tr>
+		<tr th:each="clienteSearch: ${listaClientesBusqueda}">
+			<td th:text="${clienteSearch.getIdUser()}"></td>
+			<td th:text="${clienteSearch.getNombre()}"></td>
+			<td th:text="${clienteSearch.getApellido()}"></td>
+			<td th:text="${clienteSearch.getNumeroTelefonico()}"></td>
+			<td th:text="${clienteSearch.getEmail()}"></td>
+			<td th:text="${clienteSearch.getNumeroDeCuenta()}"></td>
+			
+			<!-- Desplegar banco y cuenta -->
+			<td> <p th:each="banco : ${clienteSearch.getBanco()}" th:text="${'Banco ID: '+ banco.getId  }"></p> </td>
+			
+			<td> <p th:each="cuenta : ${clienteSearch.getCuenta()}" th:text="${'Cuenta ID: '+ cuenta.getIdCuenta  }"></p> </td>
+			
+			<td><a th:href="@{/form-cliente/} + ${clienteSearch.getIdUser()}" th:text="'Editar'"></a></td>
+			<td><a th:href="@{/eliminarcliente/} + ${clienteSearch.getIdUser()}" th:text="'Eliminar'" onclick="return confirm('Esta seguro de borrar el banco?');"></a></td>
+
+		</tr>
+		
+		
+	</tbody>
+</table>
+
+
+
+
+
+
+
+<table th:if="!${listaClientesBusqueda}">
+<a th:href="@{/form-cliente}">Registrar Cliente</a>
+<br>
+	<thead>
+	<tr>
+		<th>ID User</th>
+		<th>Nombre</th>
+		<th>Apellido</th>
+		<th>Numero Telefonico</th>
+		<th>Email</th>
+		<th>Numero de cuenta</th>
+		<th>Banco</th>
+		<th>Cuenta</th>
+		
+	</tr>
+	</thead>
+	<tbody>
+		<p th:if="${clientes.isEmpty()}">La lista de clientes esta vacia</p>
+		
+		<tr th:each="cliente: ${clientes}"></tr>
+		<tr th:each="cliente: ${clientes}">
+			<td th:text="${cliente.getIdUser()}"></td>
+			<td th:text="${cliente.getNombre()}"></td>
+			<td th:text="${cliente.getApellido()}"></td>
+			<td th:text="${cliente.getNumeroTelefonico()}"></td>
+			<td th:text="${cliente.getEmail()}"></td>
+			<td th:text="${cliente.getNumeroDeCuenta()}"></td>
+			<td> <p th:each="banco : ${cliente.getBanco()}" th:text="${'Banco ID: '+ banco.getId  }"></p> </td>
+			
+			<td> <p th:each="cuenta : ${cliente.getCuenta()}" th:text="${'Cuenta ID: '+ cuenta.getIdCuenta  }"></p> </td>
+			
+			
+			<td><a th:href="@{/form-cliente/} + ${cliente.getIdUser()}" th:text="'Editar'"></a></td>
+			<td><a th:href="@{/eliminarcliente/} + ${cliente.getIdUser()}" th:text="'Eliminar'" onclick="return confirm('Esta seguro de borrar el banco?');"></a></td>
+
+		</tr>
+		
+		
+	</tbody>
+</table>
+<a th:if="!${listaClientesNumeroTel}" th:href="@{/}">Inicio </a>
+<a th:if="${listaClientesNumeroTel}" th:href="@{clientes-lista}">Lista Clientes </a>
+</body>
+</html>

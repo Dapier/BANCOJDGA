@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8" />
+<title th:text="${titulo}"></title>
+</head>
+<body>
+
+<h3 th:text="${titulo}"></h3>
+
+<p th:text="${mensaje}"></p>
+<br>
+<p th:text="${mensajeSuccess}"></p>
+
+<form th:action="@{/buscar-empleado}" th:object="${empleado}" method="post">
+	<table>
+		<tr>
+			<td>ID del empleado</td>
+			<td><input type="text" th:field="*{idEmpleado}" required><td>
+		</tr>
+		<tr>
+			<td>Puesto</td>
+			<td><input type="text" th:field="*{puesto}" required><td>
+		</tr>
+		
+		<br>
+		<input type="submit" value="Buscar" />
+	</table>
+
+</form>
+
+
+<br>
+<br>
+
+<table th:if="${listaEmpleadosBusqueda}">
+<a th:href="@{/form-empleado}">Registrar Empleado</a>
+<br>
+
+	<thead>
+	<tr>
+		<th>ID Empleado</th>
+		<th>Nombre</th>
+		<th>Apellido</th>
+		<th>Puesto</th>
+		<th>Antiguedad</th>
+		<th>Banco</th>
+		
+	</tr>
+	</thead>
+	<tbody>
+		
+		
+		<tr th:each="empleadoSearch: ${listaEmpleadosBusqueda}"></tr>
+		<tr th:each="empleadoSearch: ${listaEmpleadosBusqueda}">
+			<td th:text="${empleadoSearch.getIdEmpleado()}"></td>
+			<td th:text="${empleadoSearch.getNombre()}"></td>
+			<td th:text="${empleadoSearch.getApellido()}"></td>
+			<td th:text="${empleadoSearch.getPuesto()}"></td>
+			<td th:text="${empleadoSearch.getAntiguedad()}"></td>
+			<td> <p th:each="banco : ${empleadoSearch.getBanco()}" th:text="${'Banco ID: '+ banco.getId  }"></p> </td>
+			<td><a th:href="@{/form-empleado/} + ${empleadoSearch.getIdEmpleado()}" th:text="'Editar'"></a></td>
+			<td><a th:href="@{/eliminarempleado/} + ${empleadoSearch.getIdEmpleado()}" th:text="'Eliminar'" onclick="return confirm('Esta seguro de borrar el banco?');"></a></td>
+			
+		</tr>
+		
+		
+	</tbody>
+</table>
+
+
+<br>
+
+
+<table th:if="!${listaEmpleadosBusqueda}">
+<a th:href="@{/form-empleado}">Registrar Empleado</a>
+<br>
+
+	<thead>
+	<tr>
+		<th>ID Empleado</th>
+		<th>Nombre</th>
+		<th>Apellido</th>
+		<th>Puesto</th>
+		<th>Antiguedad</th>
+		<th>Banco</th>
+		
+	</tr>
+	</thead>
+	<tbody>
+		<p th:if="${empleados.isEmpty()}">La lista de empleados esta vacia</p>
+		
+		<tr th:each="empleado: ${empleados}"></tr>
+		<tr th:each="empleado: ${empleados}">
+			<td th:text="${empleado.getIdEmpleado()}"></td>
+			<td th:text="${empleado.getNombre()}"></td>
+			<td th:text="${empleado.getApellido()}"></td>
+			<td th:text="${empleado.getPuesto()}"></td>
+			<td th:text="${empleado.getAntiguedad()}"></td>
+			<td> <p th:each="banco : ${empleado.getBanco()}" th:text="${'Banco ID: '+ banco.getId  }"></p> </td>
+			<td><a th:href="@{/form-empleado/} + ${empleado.getIdEmpleado()}" th:text="'Editar'"></a></td>
+			<td><a th:href="@{/eliminarempleado/} + ${empleado.getIdEmpleado()}" th:text="'Eliminar'" onclick="return confirm('Esta seguro de borrar el banco?');"></a></td>
+			
+		</tr>
+		
+		
+	</tbody>
+</table>
+<a th:href="@{/}">Volver...</a>
+
+</body>
+</html>

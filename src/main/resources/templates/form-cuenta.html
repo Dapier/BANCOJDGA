@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8" />
+<title th:text="${titulo}"></title>
+</head>
+<body>
+
+<h3 th:text="${titulo}"></h3>
+
+
+
+<br>
+
+	
+	<p th:if="${result}" th:text="${mensaje}"></p>
+	
+	<div>
+		<form th:action="@{/form-cuenta}" th:object="${cuenta}" method="post">
+			<table>
+				<tr>
+					<td>ID de Cuenta</td>
+					<td><input type="text" th:field="*{idCuenta}" required></td>
+				</tr>
+			
+				<tr>
+					<td>Monto Minimo</td>
+					<td><input type="text" th:field="*{montoMinimo}" required></td>
+					
+				</tr>
+				
+				<tr>
+					<td>Saldo Actual</td>
+					<td><input type="text" th:field="*{saldoActual}" required></td>
+					<div th:if="${#fields.hasErrors('saldoActual')}" th:errors="*{saldoActual}"></div>
+				</tr>
+				
+				<tr>
+					<td>Porcentaje</td>
+					<td><input type="text" th:field="*{porcentaje}" required></td>
+					<div th:if="${#fields.hasErrors('porcentaje')}" th:errors= "*{porcentaje}"></div>
+				</tr>
+				
+				<tr>
+					<td>Oferta</td>
+					<td>
+					<select th:field="*{casaInversionista}">
+								<option th:each="casaInversionista : ${listaCasaInversionistas}" 
+										th:value="${casaInversionista.getIdOferta()}"
+										th:text="${'ID: '+ casaInversionista.getIdOferta() + ' ' +casaInversionista.getNombreOferta()}">
+								</option>
+							</select>
+					</td>
+				</tr>
+				
+			</table>
+			<br>
+			<input type="submit" value="Registrar cliente">
+		</form>
+	
+	</div>
+<br>
+<a th:href="@{/cuentas-lista}">Volver...</a>
+</body>
+</html>

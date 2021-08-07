@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8" />
+<title th:text="${titulo}"></title>
+</head>
+<body>
+
+<h3 th:text="${titulo}"></h3>
+
+<a th:href="@{/form-casa-inversora}">Registrar Casa inversora</a>
+<br>
+
+
+
+<table>
+	<thead>
+	<tr>
+		<th>ID Oferta</th>
+		<th>Monto minimo</th>
+		<th>Nombre de Oferta</th>
+		<th>Plazos</th>
+		<th>Porcentaje de Retorno</th>
+		
+		
+	</tr>
+	</thead>
+	<tbody>
+		<p th:if="${casaInversionistas.isEmpty()}">La lista de casas de inversion esta vacia</p>
+		
+		<tr th:each="casaInversionista: ${casaInversionistas}"></tr>
+		<tr th:each="casaInversionista: ${casaInversionistas}">
+			<td th:text="${casaInversionista.getIdOferta()}"></td>
+			<td th:text="${casaInversionista.getMontoMinimo()}"></td>
+			<td th:text="${casaInversionista.getNombreOferta()}"></td>
+			<td th:text="${casaInversionista.getPlazos()}"></td>
+			
+			<td th:text="${casaInversionista.getPorcentajeRetorno()}"></td>
+			
+			<td><a th:href="@{/form-casa-inversora/} + ${casaInversionista.getIdOferta()}" th:text="'Editar'"></a></td>
+			<td><a th:href="@{/eliminarcasainversora/} + ${casaInversionista.getIdOferta()}" th:text="'Eliminar'" onclick="return confirm('Esta seguro de borrar la casa inversora?');"></a></td>
+			
+		</tr>
+	</tbody>
+</table>
+<a th:href="@{/}">Regresar</a>
+
+</body>
+</html>

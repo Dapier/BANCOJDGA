@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8" />
+<title th:text="${titulo}"></title>
+</head>
+<body>
+
+<h3 th:text="${titulo}"></h3>
+
+<p th:text="${mensaje}"></p>
+
+<a th:href="@{/form-cuenta}">Registrar Cuenta</a>
+<br>
+
+
+
+<table>
+	<thead>
+	<tr>
+		<th>ID Cuenta</th>
+		<th>Monto minimo</th>
+		<th>Saldo Actual</th>
+		<th>Porcentaje</th>
+		<th>Tarjetas </th>
+		<th>Oferta</th>
+		
+	</tr>
+	</thead>
+	<tbody>
+		<p th:if="${cuentas.isEmpty()}">La lista de cuentas esta vacia</p>
+		
+		<tr th:each="cuenta: ${cuentas}"></tr>
+		<tr th:each="cuenta: ${cuentas}">
+			<td th:text="${cuenta.getIdCuenta()}"></td>
+			<td th:text="${cuenta.getMontoMinimo()}"></td>
+			<td th:text="${cuenta.getSaldoActual()}"></td>
+			<td th:text="${cuenta.getPorcentaje()}"></td>
+			<td> <p th:each="tarjeta : ${cuenta.getTarjetas()}" th:text="${'Tarjeta ID: '+ tarjeta.getIdTarjeta + ' Nombre: '+ tarjeta.getNombre + ' Numero de cuenta: '+ tarjeta.getNumeroDeCuenta }"></p> </td>
+			<td th:text="${cuenta.getCasaInversionista().getNombreOferta()}"></td>
+			<td><a th:href="@{/form-cuenta/} + ${cuenta.getIdCuenta()}" th:text="'Editar'"></a></td>
+			<td><a th:href="@{/eliminarcuenta/} + ${cuenta.getIdCuenta()}" th:text="'Eliminar'" onclick="return confirm('Esta seguro de borrar el banco?');"></a></td>
+
+		</tr>
+		
+		
+	</tbody>
+</table>
+<br>
+<a th:href="@{/}">Volver...</a>
+</body>
+</html>

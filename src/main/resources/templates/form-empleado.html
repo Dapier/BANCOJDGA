@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8" />
+<title th:text="${titulo}"></title>
+</head>
+<body>
+
+<h3 th:text="${titulo}"></h3>
+
+
+<br/>
+
+<br>
+
+	
+	<p th:if="${result}" th:text="${mensaje}"></p>
+	
+	<div>
+		<form th:action="@{/form-empleado}" th:object="${empleado}" method="post">
+			<table>
+				<tr>
+					<td>ID Empleado</td>
+					<td><input type="text" th:field="*{idEmpleado}" required></td>
+				</tr>
+			
+				<tr>
+					<td>Nombre</td>
+					<td><input type="text" th:field="*{nombre}" required></td>
+				</tr>
+				
+				<tr>
+					<td>Apellido</td>
+					<td><input type="text" th:field="*{apellido}" required></td>
+				</tr>
+				
+				<tr>
+					<td>Puesto</td>
+					<td><input type="text" th:field="*{puesto}" required></td>
+				</tr>
+				
+				<tr>
+					<td>Antiguedad</td>
+					<td><input type="number" th:field="*{antiguedad}" required></td>
+					<td th:if="${#fields.hasErrors('antiguedad')}" th:errors="*{antiguedad}">Antiguedad Error</td>
+				</tr>
+				
+				<tr>
+					<td>Banco</td>
+					<td>
+					<select th:field="*{banco}">
+								<option th:each="banco : ${listaBancos}" 
+										th:value="${banco.getId}"
+										th:text="${banco.getId() + ' Sucursal: '+banco.getSucursal()}">
+								</option>
+							</select>
+					</td>
+				</tr>
+				
+				
+				
+				
+			</table>
+			<br>
+			<input type="submit" value="Registrar Empleado">
+		</form>
+	
+	</div>
+	<br>
+	<a th:href="@{/empleados-lista}">Volver...</a>
+
+
+</body>
+</html>

@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8" />
+<title th:text="${titulo}"></title>
+</head>
+<body>
+
+<h3 th:text="${titulo}"></h3>
+
+<br>
+<p th:text="${mensaje}"></p>
+<br>
+<p th:text="${mensajeSuccess}"></p>
+
+<form th:action="@{/buscar-tarjeta}" th:object="${tarjeta}" method="post">
+	<table>
+		<tr>
+			<td>ID Tarjeta</td>
+			<td><input type="text" th:field="*{idTarjeta}" required><td>
+		</tr>
+		<tr>
+			<td>Numero de cuenta</td>
+			<td><input type="text" th:field="*{numeroDeCuenta}" required><td>
+		</tr>
+		
+		<br>
+		<input type="submit" value="Buscar" />
+	</table>
+
+</form>
+
+
+
+<br>
+<br>
+
+<table th:if="${listaTarjetasBusqueda}">
+
+	<thead>
+	<tr>
+		<th>ID Tarjeta</th>
+		<th>Numero tarjeta</th>
+		<th>Numero de cuenta</th>
+		<th>Icv</th>
+		<th>Nombre</th>
+		
+		
+		
+	</tr>
+	</thead>
+	<tbody>
+		<tr th:each="tarjetaSearch: ${listaTarjetasBusqueda}"></tr>
+		<tr th:each="tarjetaSearch: ${listaTarjetasBusqueda}">
+			<td th:text="${tarjetaSearch.getIdTarjeta()}"></td>
+			<td th:text="${tarjetaSearch.getNumeroTarjeta()}"></td>
+			<td th:text="${tarjetaSearch.getNumeroDeCuenta()}"></td>
+			<td th:text="${tarjetaSearch.getIcv()}"></td>
+			<td th:text="${tarjetaSearch.getNombre()}"></td>
+			<td><a th:href="@{/form-tarjeta/} + ${tarjetaSearch.getIdTarjeta()}" th:text="'Editar'"></a></td>
+			<td><a th:href="@{/eliminartarjeta/} + ${tarjetaSearch.getIdTarjeta()}" th:text="'Eliminar'" onclick="return confirm('Esta seguro de borrar el banco?');"></a></td>
+			
+		</tr>
+		
+		
+	</tbody>
+</table>
+
+
+<table th:if="!${listaTarjetasBusqueda}">
+<a th:href="@{/form-tarjeta}">Registrar Tarjeta </a>
+	<thead>
+	<tr>
+		<th>ID Tarjeta</th>
+		<th>Numero tarjeta</th>
+		<th>Numero de cuenta</th>
+		<th>Icv</th>
+		<th>Nombre</th>
+		
+		
+		
+	</tr>
+	</thead>
+	<tbody>
+		<p th:if="${tarjetas.isEmpty()}">La lista de tarjetas esta vacia</p>
+		
+		<tr th:each="tarjeta: ${tarjetas}"></tr>
+		<tr th:each="tarjeta: ${tarjetas}">
+			<td th:text="${tarjeta.getIdTarjeta()}"></td>
+			<td th:text="${tarjeta.getNumeroTarjeta()}"></td>
+			<td th:text="${tarjeta.getNumeroDeCuenta()}"></td>
+			<td th:text="${tarjeta.getIcv()}"></td>
+			<td th:text="${tarjeta.getNombre()}"></td>
+			<td><a th:href="@{/form-tarjeta/} + ${tarjeta.getIdTarjeta()}" th:text="'Editar'"></a></td>
+			<td><a th:href="@{/eliminartarjeta/} + ${tarjeta.getIdTarjeta()}" th:text="'Eliminar'" onclick="return confirm('Esta seguro de borrar el banco?');"></a></td>
+			
+		</tr>
+		
+		
+	</tbody>
+</table>
+
+<a th:href="@{/}">Volver...</a>
+
+</body>
+</html>

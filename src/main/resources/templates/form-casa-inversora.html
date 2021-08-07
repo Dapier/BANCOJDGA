@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8" />
+<title th:text="${titulo}"></title>
+</head>
+<body>
+
+<h3 th:text="${titulo}"></h3>
+
+
+
+<br>
+
+	
+	<p th:if="${result}" th:text="${mensaje}"></p>
+	
+	<div>
+		<form th:action="@{/form-casa-inversora}" th:object="${casaInversionista}" method="post">
+			<table>
+				<tr>
+					<td>Id Oferta </td>
+					<td><input type="text" th:field="*{idOferta}" required></td>
+				</tr>
+			
+				<tr>
+					<td>Monto minimo</td>
+					<td><input type="text" th:field="*{montoMinimo}" required></td>
+				</tr>
+				
+				<tr>
+					<td>Nombre de Oferta</td>
+					<td><input type="text" th:field="*{nombreOferta}" required></td>
+				</tr>
+				
+				<tr>
+					<td>Plazos</td>
+					<td><input type="text" th:field="*{plazos}" required></td>
+				</tr>
+				
+				<tr>
+					<td>Porcentaje Retorno</td>
+					<td><input type="text" th:field="*{porcentajeRetorno}" required></td>
+				</tr>
+				
+			</table>
+			<br>
+			<input type="submit" value="Registrar casa inversora">
+		</form>
+	
+	</div>
+
+
+</body>
+</html>

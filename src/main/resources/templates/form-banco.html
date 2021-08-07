@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8" />
+<title th:text="${titulo}"></title>
+</head>
+<body>
+
+<h3 th:text="${titulo}"></h3>
+
+<br>
+
+
+<br>
+
+	
+	<p th:if="${result}" th:text="${mensaje}"></p>
+	
+	<div>
+		<form th:action="@{/form-banco}" th:object="${banco}" method="post">
+			<table>
+				<tr>
+					<td>ID</td>
+					<td><input type="text" th:field="*{id}" required></td>
+					
+					
+				</tr>
+			
+				<tr>
+					<td>Sucursal</td>
+					<td><input type="text" th:field="*{sucursal}" required></td>
+					<div th:if="${#fields.hasErrors('sucursal')}" th:errors="*{sucursal}"></div>
+				</tr>
+				
+				<tr>
+					<td>Ubicacion</td>
+					<td><input type="text" th:field="*{ubicacion}" required></td>
+					<div th:if="${#fields.hasErrors('ubicacion')}" th:errors="*{ubicacion}"></div>
+				</tr>
+				
+				
+				
+			</table>
+			<br>
+			<input type="submit" value="Registrar banco">
+		</form>
+	
+	</div>
+	<a th:href="@{bancos-lista}">Regresar </a>
+
+
+</body>
+</html>
